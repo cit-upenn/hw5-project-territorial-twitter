@@ -29,7 +29,9 @@ public class Search {
 	public List<Status> query() {
 		
 		Query q = new Query(searchTerm);
-		q.setGeoCode(location, radius, Query.MILES);
+		if (geoSearch) {
+			q.setGeoCode(location, radius, Query.MILES);
+		}
 		q.setLang("en");
 		q.setResultType(Query.RECENT);
 		q.setCount(100);

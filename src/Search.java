@@ -10,6 +10,7 @@ public class Search {
 	private GeoLocation location;
 	private double radius;
 	private double numberOfPages;
+	private boolean geoSearch;
 	
 	public Search(String term, double latitude, double longitude, double radius, int pages) {
 		twitter = Connect.getTwitter();
@@ -17,6 +18,12 @@ public class Search {
 		location = new GeoLocation(latitude, longitude);
 		this.radius = radius;
 		numberOfPages = pages;
+		geoSearch = true;
+	}
+	
+	public Search(String term, int pages) {
+		this(term, 0.0, 0.0, 0.0, pages);
+		geoSearch = false;
 	}
 	
 	public List<Status> query() {

@@ -46,7 +46,7 @@
 <body>
 	<div id="map"></div>
 
-	<script type="text/javascript" src="us-states-test.js"></script>
+	<script type="text/javascript" src="us-states-tweets.js"></script>
 	<script type="text/javascript">
 		// This is the coordinate for the US!
 

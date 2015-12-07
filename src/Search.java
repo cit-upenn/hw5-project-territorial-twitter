@@ -1,4 +1,4 @@
-package twitter1v1;
+
 import java.util.List;
 
 import twitter4j.*;

@@ -1,4 +1,4 @@
-package twitter1v1;
+
 import twitter4j.*;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;

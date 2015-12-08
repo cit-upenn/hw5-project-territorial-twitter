@@ -83,6 +83,7 @@ public class Search {
 			System.out.println();
 		}
 		System.out.println(status.getText());
+		System.out.println(status.getRetweetCount() + " retweets | " + status.getFavoriteCount() + " favorites");
 		System.out.println("-----------------------------------------------------------");
 		System.out.println();
 	}

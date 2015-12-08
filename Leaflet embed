@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Twitter Map Template</title>
+	<title>Twitter Mood Map</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,13 +87,15 @@
 		// Use colorbrewer for more interesting colors: http://colorbrewer2.org/
 		var tweets = 666;
 		function getColor(tweets) {
-			return tweets > 100 ? '#800026' :
-			       tweets > 50  ? '#BD0026' :
-			       tweets > 20  ? '#E31A1C' :
-			       tweets > 10  ? '#FC4E2A' :
-			       tweets > -10  ? '#FD8D3C' :
-			       tweets > -20   ? '#FEB24C' :
-			       tweets > -50   ? '#FED976' :
+			return tweets > 100  ? '#d53e4f' :
+ 			       tweets > 50 ? '#f46d43' :
+			       tweets > 20  ? '#fdae61' :
+			       tweets > 10  ? '#fee08b' :
+			       tweets > 0  ? '#ffffbf' :
+			       tweets > -10  ? '#e6f598' :
+			       tweets > -20   ? '#abdda4' :
+			       tweets > -50   ? '#66c2a5' :
+			       tweets > -100   ? '#3288bd' :
 			                  '#FFEDA0';
 		}
 

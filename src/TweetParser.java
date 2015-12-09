@@ -88,7 +88,7 @@ public class TweetParser {
 							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(2);
 						}
 						if(boo1 || boo2) {
-							System.out.println("There was a match in: " +userLocation);
+//							System.out.println("There was a match in: " +userLocation);
 							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, boo1, boo2);
 						}
 					}

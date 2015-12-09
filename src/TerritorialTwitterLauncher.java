@@ -1,4 +1,8 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+
+import twitter4j.Status;
 
 public class TerritorialTwitterLauncher {
 
@@ -22,11 +26,21 @@ public class TerritorialTwitterLauncher {
 			System.out.print("Enter the second search term: ");
 			String secondTerm = in.nextLine();
 			
-			Search firstSearch = new Search(firstTerm, numberOfPages);
-			firstSearch.query();
-			Search secondSearch = new Search(secondTerm, numberOfPages);
-			secondSearch.query();
+			//Saves the tweets to a linked list
+			List<Status> tweets = new LinkedList<Status>();
 			
+			//Performs search and adds the lists of tweets to the Linked List
+			Search firstSearch = new Search(firstTerm, numberOfPages);
+			tweets.addAll(firstSearch.query());
+			Search secondSearch = new Search(secondTerm, numberOfPages);
+			tweets.addAll(secondSearch.query());
+			
+			//Parses tweets and saves counts/tweets to the StateTweetTracker
+			TweetParser parser = new TweetParser(tweets, firstTerm, secondTerm);
+			StateTweetTracker parsedTweets = parser.getStatesList();
+			
+			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
+			JSWriter write = new JSWriter(parsedTweet);
 			
 			// Asks for and reads user input to run again
 			System.out.print("Would you like to run another search (y/n)?: ");

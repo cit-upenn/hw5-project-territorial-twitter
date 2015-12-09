@@ -19,7 +19,7 @@ public class Search {
 		this.radius = radius;
 		numberOfPages = pages;
 		geoSearch = true;
-	}
+	} 
 	
 	public Search(String term, int pages) {
 		this(term, 0.0, 0.0, 0.0, pages);

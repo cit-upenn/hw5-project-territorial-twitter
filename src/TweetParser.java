@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -37,11 +38,17 @@ public class TweetParser {
 
 
 	private void parseTweets() {
-		Pattern pattern1 = Pattern.compile("[^a-zA-Z0-9]?" + query1 + "[^a-zA-Z0-9]");
-		Pattern pattern2 = Pattern.compile("[^a-zA-Z0-9]" + query2 + "[^a-zA-Z0-9]");
+		Pattern pattern1 = Pattern.compile("[^a-zA-Z0-9]?" + query1 + "[^a-zA-Z0-9]?");
+		Pattern pattern2 = Pattern.compile("[^a-zA-Z0-9]?" + query2 + "[^a-zA-Z0-9]?");
+		List<Pattern> stateMatches = new LinkedList<Pattern>();
+		for(String state : mapOfAbbreviations.keySet()) {
+			stateMatches.add(Pattern.compile("[^a-zA-Z0-9]*?" + state + "[^a-zA-Z0-9]*"));
+		}
 		Matcher match;
 		for (Status tweet : tweets) {
 			Place place = tweet.getPlace();
+			User user = tweet.getUser();
+			String userLocation = user.getLocation();
 			if(place != null) {
 				String tweetLocation = place.getFullName();
 				if (!tweetLocation.isEmpty()) {
@@ -63,6 +70,30 @@ public class TweetParser {
 						}
 						mapOfStates.getState(state).addTweet(tweet, boo1, boo2);
 					}
+				}
+			} else if(!userLocation.isEmpty()) {
+				for(Pattern statePattern : stateMatches) {
+					match = statePattern.matcher(userLocation);
+					if(match.find()) {
+						match = pattern1.matcher(tweet.getText().toLowerCase());
+						boolean boo1 = match.find();
+						match = pattern2.matcher(tweet.getText().toLowerCase());
+						boolean boo2 = match.find();
+						String state = statePattern.toString().substring(14, 16);
+						System.out.println(state);
+						if (boo1) {
+							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(1);
+						}
+						if (boo2) {
+							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(2);
+						}
+						if(boo1 || boo2) {
+							System.out.println("There was a match in: " +userLocation);
+							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, boo1, boo2);
+						}
+					}
+					
+					
 				}
 			}
 			

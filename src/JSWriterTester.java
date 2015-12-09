@@ -21,7 +21,9 @@ public class JSWriterTester {
 			
 			PrintWriter out = new PrintWriter("us-states-tweets-done.js");
 			
-			JSWriter jsw = new JSWriter();
+			StateTweetTracker parsedTweets = new StateTweetTracker();
+			
+			JSWriter jsw = new JSWriter(parsedTweets);
 			
 			while (in.hasNextLine()) {
 				String line = in.nextLine();

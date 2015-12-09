@@ -40,7 +40,9 @@ public class TerritorialTwitterLauncher {
 			StateTweetTracker parsedTweets = parser.getStatesList();
 			
 			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
-			JSWriter write = new JSWriter(parsedTweet);
+			JSWriter write = new JSWriter(parsedTweets);
+			
+			write.outJS();
 			
 			// Asks for and reads user input to run again
 			System.out.print("Would you like to run another search (y/n)?: ");

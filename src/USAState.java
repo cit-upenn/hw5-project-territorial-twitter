@@ -39,6 +39,11 @@ public class USAState {
 		} 
 	}
 	
+	public void addTaggedStatusList(List<TaggedStatus> tweets) {
+		 
+		this.tweets.addAll(tweets);
+	}
+	
 	public void addTweet(Status tweet, boolean boo1, boolean boo2) {
 		 
 		tweets.add(new TaggedStatus(tweet, boo1, boo2));

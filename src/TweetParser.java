@@ -17,15 +17,15 @@ public class TweetParser {
 	private StateTweetTracker mapOfStates;
 	private List<Status> tweets;
 	private Map<String, String> mapOfAbbreviations;
-	private String query1;
-	private String query2;
+	private int queryIndex;
+	
 
-	public TweetParser(List<Status> tweets, String query1, String query2) {
+	public TweetParser(List<Status> tweets, int queryIndex) {
 		mapOfStates = new StateTweetTracker();
 		mapOfAbbreviations = new HashMap<String, String>();
 		this.tweets = tweets;
-		this.query1 = query1.toLowerCase();
-		this.query2 = query2.toLowerCase();
+		this.queryIndex = queryIndex;
+		
 
 		
 	}
@@ -38,8 +38,6 @@ public class TweetParser {
 
 
 	private void parseTweets() {
-		Pattern pattern1 = Pattern.compile("[^a-zA-Z0-9]?" + query1 + "[^a-zA-Z0-9]?");
-		Pattern pattern2 = Pattern.compile("[^a-zA-Z0-9]?" + query2 + "[^a-zA-Z0-9]?");
 		List<Pattern> stateMatches = new LinkedList<Pattern>();
 		for(String state : mapOfAbbreviations.keySet()) {
 			stateMatches.add(Pattern.compile("[^a-zA-Z0-9]*?" + state + "[^a-zA-Z0-9]*"));
@@ -58,38 +56,29 @@ public class TweetParser {
 					
 					if (mapOfAbbreviations.containsKey(abbr)) {
 						String state = mapOfAbbreviations.get(abbr);
-						match = pattern1.matcher(tweet.getText().toLowerCase());
-						boolean boo1 = match.find();
-						match = pattern2.matcher(tweet.getText().toLowerCase());
-						boolean boo2 = match.find();
-						if (boo1) {
+						if (queryIndex == 1) {
 							mapOfStates.getState(state).incrementQuery(1);
+							mapOfStates.getState(state).addTweet(tweet, true, false);
 						}
-						if (boo2) {
+						if (queryIndex == 2) {
 							mapOfStates.getState(state).incrementQuery(2);
+							mapOfStates.getState(state).addTweet(tweet, false, true);
 						}
-						mapOfStates.getState(state).addTweet(tweet, boo1, boo2);
+						
 					}
 				}
 			} else if(!userLocation.isEmpty()) {
 				for(Pattern statePattern : stateMatches) {
 					match = statePattern.matcher(userLocation);
 					if(match.find()) {
-						match = pattern1.matcher(tweet.getText().toLowerCase());
-						boolean boo1 = match.find();
-						match = pattern2.matcher(tweet.getText().toLowerCase());
-						boolean boo2 = match.find();
 						String state = statePattern.toString().substring(14, 16);
-						System.out.println(state);
-						if (boo1) {
+						if (queryIndex == 1) {
 							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(1);
+							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, true, false);
 						}
-						if (boo2) {
+						if (queryIndex == 2) {
 							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(2);
-						}
-						if(boo1 || boo2) {
-//							System.out.println("There was a match in: " +userLocation);
-							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, boo1, boo2);
+							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, false, true);
 						}
 					}
 					
@@ -102,6 +91,7 @@ public class TweetParser {
 
 	}
 
+	
 	private void initializeStateMap() {
 		String[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
 				"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", 

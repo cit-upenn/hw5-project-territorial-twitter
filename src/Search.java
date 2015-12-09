@@ -18,7 +18,7 @@ public class Search {
 		location = new GeoLocation(latitude, longitude);
 		this.radius = radius;
 		numberOfPages = pages;
-		geoSearch = true;
+		geoSearch = true; 
 	} 
 	
 	public Search(String term, int pages) {
@@ -36,17 +36,18 @@ public class Search {
 		q.setResultType(Query.RECENT);
 		q.setCount(100);
 		
-		int numberOfTweets = 0;
+//		int numberOfTweets = 0;
 		
 		try {
 			QueryResult qResult = twitter.search(q);
 			List<Status> tweets = qResult.getTweets();
 			List<Status> totalTweets = qResult.getTweets();
 			
-			for (Status status : tweets) {
-				printStatus(status);
-				numberOfTweets++;
-			}
+			//Removed printing statuses for testing.
+//			for (Status status : tweets) {
+////				printStatus(status);
+//				numberOfTweets++;
+//			}
 			numberOfPages--;
 			
 			while (qResult.hasNext() && numberOfPages > 0) {
@@ -55,14 +56,15 @@ public class Search {
 				tweets = qResult.getTweets();
 				totalTweets.addAll(qResult.getTweets());
 				
-				for (Status status : tweets) {
-					printStatus(status);
-					numberOfTweets++;
-				}
+				//Removed printing statuses for testing.
+//				for (Status status : tweets) {
+//					printStatus(status);
+//					numberOfTweets++;
+//				}
 				numberOfPages--;
 			}
 			
-			System.out.println(numberOfTweets + " results.");
+			System.out.println("\"" + searchTerm + "\"" + " had " + totalTweets.size() + " results.");
 			
 			return totalTweets;
 			
@@ -79,6 +81,16 @@ public class Search {
 		System.out.print(status.getCreatedAt());
 		if (status.getGeoLocation() != null) {
 			System.out.println(" | (" + status.getGeoLocation().getLatitude() + ", " + status.getGeoLocation().getLongitude() + ")");
+		} else {
+			System.out.println();
+		}
+		if (status.getPlace() != null) {
+			System.out.println("Place: " + status.getPlace().getFullName());
+		} else {
+			System.out.println();
+		}
+		if (status.getUser().getLocation() != "") {
+			System.out.println("User Location: " + status.getUser().getLocation());
 		} else {
 			System.out.println();
 		}

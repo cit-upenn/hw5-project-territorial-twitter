@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StateTweetTracker {
 	private Map<String, USAState> mapOfStates;
@@ -24,6 +25,27 @@ public class StateTweetTracker {
 	
 	public List<TaggedStatus> getTweets(String state) {
 		return getState(state).getTweets();
+	}
+	
+	public Set<String> getStates () {
+		return mapOfStates.keySet();
+	}
+	
+	public void addParsedTweets (StateTweetTracker parsedTweets, int queryIndex) {
+		for(String otherState : parsedTweets.getStates()) {
+			int count = 0;
+			if(queryIndex == 2) {
+				count = parsedTweets.getQuery1Count(otherState);
+			} else {
+				count = parsedTweets.getQuery2Count(otherState);
+			}
+			
+			for(int i = 0; i < count;  i++) {
+				this.getState(otherState).incrementQuery(queryIndex);
+			}
+			this.getState(otherState).addTaggedStatusList(parsedTweets.getTweets(otherState));
+			
+		}
 	}
 	
 	private void createStatesList() {

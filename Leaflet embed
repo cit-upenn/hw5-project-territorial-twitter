@@ -46,7 +46,7 @@
 <body>
 	<div id="map"></div>
 
-	<script type="text/javascript" src="us-states-tweets.js"></script>
+	<script type="text/javascript" src="us-states-tweets-done.js"></script>
 	<script type="text/javascript">
 		// This is the coordinate for the US!
 
@@ -63,8 +63,8 @@
 		L.geoJson(statesData).addTo(map);
 
 		// change marker coordinates here to add a label!
-		L.marker([39, -75]).addTo(map)
-			.bindPopup("<b>Howdy!</b><br /> My opinion matters the most!").openPopup();
+		// L.marker([39, -75]).addTo(map)
+			// .bindPopup("<b>Howdy!</b><br /> My opinion matters the most!").openPopup();
 
 		// control that shows state info on hover, we can use these controls to see trends or w/e
 		var info = L.control();
@@ -77,7 +77,7 @@
 
 		info.update = function (props) {
 			this._div.innerHTML = '<h4>US Search Comparison</h4>' +  (props ?
-				'<b>' + props.name + '</b><br />' + props.tweets + ' search queries</sup>'
+				'<b>' + props.name + '</b><br />' + ' Query Ratio: </sup>' + props.tweets 
 				: 'Hover over a state');
 		};
 
@@ -85,17 +85,17 @@
 
 		// This function gets the colors for the different states
 		// Use colorbrewer for more interesting colors: http://colorbrewer2.org/
-		var tweets = 666;
+		var tweets = 777;
 		function getColor(tweets) {
-			return tweets > 100  ? '#d53e4f' :
- 			       tweets > 50 ? '#f46d43' :
-			       tweets > 20  ? '#fdae61' :
-			       tweets > 10  ? '#fee08b' :
-			       tweets > 0  ? '#ffffbf' :
-			       tweets > -10  ? '#e6f598' :
-			       tweets > -20   ? '#abdda4' :
-			       tweets > -50   ? '#66c2a5' :
-			       tweets > -100   ? '#3288bd' :
+			return tweets > 2  ? '#d53e4f' :
+ 			       tweets > 1.5 ? '#f46d43' :
+			       tweets > 1.3  ? '#fdae61' :
+			       tweets > 1.1  ? '#fee08b' :
+			       tweets > 1  ? '#ffffbf' :
+			       tweets > 0.9  ? '#e6f598' :
+			       tweets > 0.5   ? '#abdda4' :
+			       tweets > 0.3   ? '#66c2a5' :
+			       tweets > 0.1   ? '#3288bd' :
 			                  '#FFEDA0';
 		}
 
@@ -154,17 +154,16 @@
 			onEachFeature: onEachFeature
 		}).addTo(map);
 
-		// map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+		map.attributionControl.addAttribution('US state shapes data provided by Mike Bostock <a href="http://bost.ocks.org/mike">D3</a>');
 
 
 		var legend = L.control({position: 'bottomright'});
 		//This function controls the legend
-		//Need 3 search queries: Positive, Neutral, Negative 
 
 		legend.onAdd = function (map) {
 
 			var div = L.DomUtil.create('div', 'info legend'),
-				grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+				grades = [0, 0.1, 0.3, 0.5, 0.9, 1, 1.1, 1.3, 1.5, 2],
 				labels = [],
 				from, to;
 

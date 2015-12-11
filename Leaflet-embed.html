@@ -76,9 +76,9 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>US Search Comparison</h4>' +  (props ?
+			this._div.innerHTML = '<h4>US Search Term Comparison</h4>' +  (props ?
 				'<b>' + props.name + '</b><br />' + ' Query Ratio: </sup>' + props.tweets 
-				: 'Hover over a state');
+				: 'Hover mouse over a state to see details');
 		};
 
 		info.addTo(map);
@@ -96,6 +96,7 @@
 			       tweets > 0.5   ? '#abdda4' :
 			       tweets > 0.3   ? '#66c2a5' :
 			       tweets > 0.1   ? '#3288bd' :
+			       tweets = 0	? '#000' :
 			                  '#FFEDA0';
 		}
 
@@ -172,7 +173,7 @@
 				to = grades[i + 1];
 
 				labels.push(
-					'<i style="background:' + getColor(from + 1) + '"></i> ' +
+					'<i style="background:' + getColor(from + 0.2) + '"></i> ' +
 					from + (to ? '&ndash;' + to : '+'));
 			}
 

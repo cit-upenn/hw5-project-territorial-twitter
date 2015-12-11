@@ -11,12 +11,10 @@ import twitter4j.Status;
 public class JSWriterTest {
 	
 	
-//	private JSWriter tweets;
-
 	@Test
 	public void JSWriterNotNull() {
 		List<Status> tweets = new LinkedList<Status>();
-		TweetParser parser = new TweetParser(tweets, "Hot Dog", "Burger");
+		TweetParser parser = new TweetParser(tweets, 1);
 		StateTweetTracker parsedTweets = parser.getStatesList();
 		JSWriter write = new JSWriter(parsedTweets);
 		assertNotNull("JSWriter cannot be null", write);
@@ -24,19 +22,50 @@ public class JSWriterTest {
 	}
 	
 	@Test
-	public void WriteJSNotNull() {
+	public void writeJSNotNull() {
 		List<Status> tweets = new LinkedList<Status>();
-		TweetParser parser = new TweetParser(tweets, "Hot Dog", "Burger");
+		TweetParser parser = new TweetParser(tweets, 2);
 		StateTweetTracker parsedTweets = parser.getStatesList();
 		JSWriter write = new JSWriter(parsedTweets);
 		String line = "This is a test String";
 		write.writeJS(line);
-		assertNotNull("WriteJS cannot be null", write.writeJS(line));
+		assertNotNull("writeJS cannot be null", write.writeJS(line));
 		
 	}
+	
 	@Test
-	public void testWriteWashingtonCount() {
-
-		
+	public void outJSWorks() {
+		List<Status> tweets = new LinkedList<Status>();
+		TweetParser parser = new TweetParser(tweets, 3);
+		StateTweetTracker parsedTweets = parser.getStatesList();
+		JSWriter write = new JSWriter(parsedTweets);
+		write.outJS();	
 	}
+		
+//	@Test
+//	public void testWriteWashingtonCount() {
+//		List<Status> tweets = new LinkedList<Status>();
+//		TweetParser parser = new TweetParser(tweets, "One", "Two");
+//		StateTweetTracker parsedTweets = parser.getStatesList();
+//		JSWriter write = new JSWriter(parsedTweets);
+//		String line = "This is a test String";
+//		write.writeJS(line);
+//		assertNotNull("WriteJS cannot be null", write.writeJS(line));
+//		
+//	}
+//	
+//	@Test
+//	public void testFiftyStatesExact() {
+//		List<Status> tweets = new LinkedList<Status>();
+//		TweetParser parser = new TweetParser(tweets, "Kitten", "Puppy");
+//		StateTweetTracker parsedTweets = parser.getStatesList();
+//		JSWriter write = new JSWriter(parsedTweets);
+//		String line = "This is a test String";
+//		
+//		for (int i = 0; i < 50; i++) {
+//			write.writeJS(line);
+//		}
+//		assertNotNull("WriteJS cannot be null", write.writeJS(line));
+//		
+//	}
 }

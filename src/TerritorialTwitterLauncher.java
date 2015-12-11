@@ -47,7 +47,7 @@ public class TerritorialTwitterLauncher {
 			parsedTweets.addParsedTweets(secondParser.getStatesList(), 2);
 			
 			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
-			JSWriter write = new JSWriter(parsedTweets);
+			JSWriter write = new JSWriter(parsedTweets, firstTerm, secondTerm);
 			String[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
 					"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", 
 					"Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 

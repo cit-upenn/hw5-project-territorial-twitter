@@ -23,7 +23,7 @@ public class JSWriterTester {
 			
 			StateTweetTracker parsedTweets = new StateTweetTracker();
 			
-			JSWriter jsw = new JSWriter(parsedTweets);
+			JSWriter jsw = new JSWriter(parsedTweets, "str1", "str2");
 			
 			while (in.hasNextLine()) {
 				String line = in.nextLine();

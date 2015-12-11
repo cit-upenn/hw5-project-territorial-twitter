@@ -18,14 +18,18 @@ public class JSWriter {
 			"South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
 			"West Virginia", "Wisconsin", "Wyoming" };
 	private StateTweetTracker stt;
+	String firstTerm;
+	String secondTerm;
 	
 	/**
 	 * The constructor for the JSWriter class
 	 * @param stt input StateTweetTracker object
 	 */
-	public JSWriter(StateTweetTracker stt){
+	public JSWriter(StateTweetTracker stt, String firstTerm, String secondTerm){
 		this.stt =stt;
-		this.states=states;
+		this.firstTerm = firstTerm;
+		this.secondTerm = secondTerm;
+//		this.states=states;
 	}
 	/**
 	 * This method overwrites the "counts" String in a text file with value of tweet counts
@@ -51,7 +55,8 @@ public class JSWriter {
 				if (line.contains("counts")){
 //					System.out.println("success!");
 					line = line.replaceAll("counts", comp);
-	
+					line = line.replaceAll("q1", "\"" + firstTerm + "\"");
+					line = line.replaceAll("q2", "\"" + secondTerm + "\"");
 			    return line;
 			    } 
 			}

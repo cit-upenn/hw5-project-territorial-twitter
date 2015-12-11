@@ -16,7 +16,7 @@ public class JSWriterTest {
 		List<Status> tweets = new LinkedList<Status>();
 		TweetParser parser = new TweetParser(tweets, 1);
 		StateTweetTracker parsedTweets = parser.getStatesList();
-		JSWriter write = new JSWriter(parsedTweets);
+		JSWriter write = new JSWriter(parsedTweets, "test1", "test2");
 		assertNotNull("JSWriter cannot be null", write);
 		
 	}
@@ -26,7 +26,7 @@ public class JSWriterTest {
 		List<Status> tweets = new LinkedList<Status>();
 		TweetParser parser = new TweetParser(tweets, 2);
 		StateTweetTracker parsedTweets = parser.getStatesList();
-		JSWriter write = new JSWriter(parsedTweets);
+		JSWriter write = new JSWriter(parsedTweets, "test1", "test2");
 		String line = "This is a test String";
 		write.writeJS(line);
 		assertNotNull("writeJS cannot be null", write.writeJS(line));
@@ -38,7 +38,7 @@ public class JSWriterTest {
 		List<Status> tweets = new LinkedList<Status>();
 		TweetParser parser = new TweetParser(tweets, 3);
 		StateTweetTracker parsedTweets = parser.getStatesList();
-		JSWriter write = new JSWriter(parsedTweets);
+		JSWriter write = new JSWriter(parsedTweets, "test1", "test2");
 		write.outJS();	
 	}
 		

@@ -1,4 +1,3 @@
-
 import twitter4j.*;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
@@ -24,8 +23,7 @@ public class Connect {
 
 		try {
 			token = new TwitterFactory(cb.build()).getInstance().getOAuth2Token();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (TwitterException e) {
 			System.out.println("Error getting OAuth2 token!");
 			System.exit(0);
 		}
@@ -41,7 +39,6 @@ public class Connect {
 	 * @return twitter, Twitter object
 	 */
 	public static Twitter getTwitter() {
-
 		OAuth2Token token = getOAuth2Token();
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 

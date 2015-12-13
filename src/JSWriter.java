@@ -34,10 +34,10 @@ public class JSWriter {
 		this.secondTerm = secondTerm;
 	}
 	/**
-	 * This method overwrites the "counts" String in a text file with value of tweet counts
+	 * This method finds the state name in a text file and edits its tweet data based on values
 	 * from that particular state
 	 * @param line the line of text scanned by outJS
-	 * @return line the line of text with "counts", "q1", and "q2" edited by value
+	 * @return line the line of text with "ratio", "q1", and "q2" edited by corresponding value
 	 */
 	public String writeJS(String line){
 //		Most lines in the .js file contains data for a state. Therefore, the state name is the first string to check for
@@ -56,12 +56,18 @@ public class JSWriter {
 				}
 				qcomp = Math.round(qcomp*100.0)/100.0;
 				String comp = String.valueOf(qcomp);
-//				The string "counts" is replaced with the query value and "q1" and "q2" are replaced with the search terms
-				if (line.contains("counts")){
+//				the double values are converted to int for display on the map
+				int qci1 = (int) qc1;
+				int qci2 = (int) qc2;
+//				The string "ratio" is replaced with the query value and "q1" and "q2" are replaced with the search terms
+//				"qc1" and "qc2" are replaced by the actual counts from the parser
+				if (line.contains("ratio")){
 //					System.out.println("success!");
-					line = line.replaceAll("counts", comp);
+					line = line.replaceAll("ratio", comp);
 					line = line.replaceAll("q1", "\"" + firstTerm + "\"");
+					line = line.replaceAll("qc1", "\"" + qci1 + "\"");
 					line = line.replaceAll("q2", "\"" + secondTerm + "\"");
+					line = line.replaceAll("qc2", "\"" + qci2 + "\"");
 			    return line;
 			    } 
 			}

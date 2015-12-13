@@ -62,9 +62,6 @@
 
 		L.geoJson(statesData).addTo(map);
 
-		// change marker coordinates here to add a label!
-		// L.marker([39, -75]).addTo(map)
-			// .bindPopup("<b>Howdy!</b><br /> My opinion matters the most!").openPopup();
 
 		// control that shows state info on hover, we can use these controls to see trends or w/e
 		var info = L.control();
@@ -76,8 +73,8 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>US Search Term Comparison</h4>'  +  (props ?
-				'<b>' + props.name + '</b><br />' + props.Query1 + ' vs ' + props.Query2 + '</b><br />' + ' Query Ratio: </sup>' + props.tweets 
+			this._div.innerHTML = '<h4>US Search Term Comparison</h4>' +  (props ?
+				'<b>' + props.name + '</b><br />' + props.Query1 + ' vs ' + props.Query2 + '</b><br />' + props.Query1 + ': ' +props.Q1Count + ' tweets' + '</b><br />' + props.Query2 + ': ' + props.Q2Count + ' tweets' + '</b><br />' + ' Query Ratio: </sup>' + props.tweets 
 				: 'Hover mouse over a state to see details');
 		};
 

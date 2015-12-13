@@ -8,8 +8,11 @@ import java.util.regex.Pattern;
 import twitter4j.*;
 
 /**
- * This class takes an input of geo-tagged tweets and two search queries, and
- * outputs
+ * This class takes an input of tweets and the search query index (either 
+ * the first or second search term), and outputs a StateTweetTracker
+ * object that holds the tweets parsed by state. The query index is used
+ * to record which query count to increment for each state. Two search terms 
+ * should be run separately with their specified query index. 
  * 
  * @author brendonlavernia
  *
@@ -20,26 +23,41 @@ public class TweetParser {
 	private Map<String, String> mapOfAbbreviations;
 	private int queryIndex;
 
+	/**
+	 * The constructor for this class.
+	 * @param tweets The list of Twitter4J Status objects to parse
+	 * @param queryIndex Either the first or second search term
+	 */
 	public TweetParser(List<Status> tweets, int queryIndex) {
 		mapOfStates = new StateTweetTracker();
 		mapOfAbbreviations = new HashMap<String, String>();
 		this.tweets = tweets;
-		this.queryIndex = queryIndex;
+		this.queryIndex = queryIndex; 
 
 	}
 
+	/**
+	 * Runs the parsing program to divide tweets by state
+	 * @return A StateTweetTracker object with tweets parsed by state
+	 */
 	public StateTweetTracker getStatesList() {
 		initializeStateMap();
 		parseTweets();
 		return mapOfStates;
 	}
 
+	/**
+	 * Parses the list of tweets. Ignores non-US as well as Washington D.C. tweets, 
+	 * as they do not belong to a US state.
+	 */
 	private void parseTweets() {
+		//List of state abbreviation patterns (i.e. "\bFL\b", "\bPA\b")
 		List<Pattern> stateAbbrMatches = new LinkedList<Pattern>();
 		for (String stateAbbr : mapOfAbbreviations.keySet()) {
 			stateAbbrMatches.add(Pattern.compile("\\b" + stateAbbr + "\\b"));
 		}
-
+		
+		//List of state full name patterns (i.e. "\bFlorida\b", "\bPennsylvania\b")
 		List<Pattern> stateMatches = new LinkedList<Pattern>();
 		for (String state : mapOfAbbreviations.keySet()) {
 			stateMatches.add(Pattern.compile("\\b" + mapOfAbbreviations.get(state) + "\\b"));
@@ -49,13 +67,14 @@ public class TweetParser {
 		Pattern capital = Pattern.compile("D\\.C\\.");
 
 		for (Status tweet : tweets) {
-			boolean foundMatch = false;
+			boolean foundMatch = false; //used to jump to next tweet if match is found
 			Place place = tweet.getPlace();
 			User user = tweet.getUser();
 			String userLocation = user.getLocation();
 			if (place != null) {
 				String tweetLocation = place.getFullName();
 				if (!tweetLocation.isEmpty()) {
+					//Checks tweetLocation against every state abbreviation and full name pattern
 					for (Pattern stateAbbrPattern : stateAbbrMatches) {
 						match = stateAbbrPattern.matcher(tweetLocation);
 						if (match.find()) {
@@ -72,6 +91,11 @@ public class TweetParser {
 							}
 						}
 
+					}
+					//Weeds out state capital from fullName searches. 
+					match = capital.matcher(tweetLocation);
+					if (match.find()) {
+						foundMatch = true;
 					}
 
 					if (!foundMatch) {
@@ -98,10 +122,13 @@ public class TweetParser {
 
 				}
 			}
+			//Weeds out state capital from fullName searches. 
 			match = capital.matcher(userLocation);
 			if (match.find()) {
 				foundMatch = true;
 			}
+			
+			//Checks userLocation against every state abbreviation and full name pattern
 			if (!userLocation.isEmpty() && !foundMatch) {
 				for (Pattern stateAbbrPattern : stateAbbrMatches) {
 					match = stateAbbrPattern.matcher(userLocation);
@@ -148,7 +175,8 @@ public class TweetParser {
 		}
 
 	}
-
+	
+	//Initialized the HashMap to look up state abbreviations
 	private void initializeStateMap() {
 		String[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
 				"Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",

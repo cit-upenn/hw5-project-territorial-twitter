@@ -1,5 +1,4 @@
 import twitter4j.Status;
-import twitter4j.User;
 
 public class TaggedStatus {
 	private Status tweet;
@@ -25,10 +24,5 @@ public class TaggedStatus {
 		return tweet;
 	}
 	
-	public String getFormattedTweet() {
-		User person = tweet.getUser();
-		String personString = person.getName();
-		String text = tweet.getText();
-		return (personString + ": " + text);
-	}
+	
 }

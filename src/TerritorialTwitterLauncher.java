@@ -36,8 +36,8 @@ public class TerritorialTwitterLauncher {
 			Search firstSearch = new Search(firstTerm, numberOfPages);
 			firstQueryTweets.addAll(firstSearch.query());
 			Search secondSearch = new Search(secondTerm, numberOfPages);
-			secondQueryTweets.addAll(secondSearch.query());
-			
+			secondQueryTweets.addAll(secondSearch.query()); 
+			 
 			//Parses tweets and saves counts/tweets to the StateTweetTracker
 			TweetParser firstParser = new TweetParser(firstQueryTweets, 1);
 			StateTweetTracker parsedTweets = firstParser.getStatesList();

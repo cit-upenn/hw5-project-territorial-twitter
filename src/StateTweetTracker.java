@@ -38,7 +38,7 @@ public class StateTweetTracker {
 				count = parsedTweets.getQuery1Count(otherState);
 			} else {
 				count = parsedTweets.getQuery2Count(otherState);
-			}
+			} 
 			
 			for(int i = 0; i < count;  i++) {
 				this.getState(otherState).incrementQuery(queryIndex);

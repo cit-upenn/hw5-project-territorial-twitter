@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import twitter4j.Status;
 
@@ -53,15 +52,8 @@ public class USAState {
 		return tweets;
 	}
 	
-	public String getFormattedTweet(int index) {
-		return tweets.get(index).getFormattedTweet();
-	}
 	
-	public String getFormattedTweet() {
-		Random rand = new Random();
-		int index = rand.nextInt(tweets.size());
-		return getFormattedTweet(index);
-	}
+
 	
 	
 	

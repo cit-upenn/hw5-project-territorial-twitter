@@ -41,31 +41,5 @@ public class JSWriterTest {
 		JSWriter write = new JSWriter(parsedTweets, "test1", "test2");
 		write.outJS();	
 	}
-		
-//	@Test
-//	public void testWriteWashingtonCount() {
-//		List<Status> tweets = new LinkedList<Status>();
-//		TweetParser parser = new TweetParser(tweets, "One", "Two");
-//		StateTweetTracker parsedTweets = parser.getStatesList();
-//		JSWriter write = new JSWriter(parsedTweets);
-//		String line = "This is a test String";
-//		write.writeJS(line);
-//		assertNotNull("WriteJS cannot be null", write.writeJS(line));
-//		
-//	}
-//	
-//	@Test
-//	public void testFiftyStatesExact() {
-//		List<Status> tweets = new LinkedList<Status>();
-//		TweetParser parser = new TweetParser(tweets, "Kitten", "Puppy");
-//		StateTweetTracker parsedTweets = parser.getStatesList();
-//		JSWriter write = new JSWriter(parsedTweets);
-//		String line = "This is a test String";
-//		
-//		for (int i = 0; i < 50; i++) {
-//			write.writeJS(line);
-//		}
-//		assertNotNull("WriteJS cannot be null", write.writeJS(line));
-//		
-//	}
+
 }

@@ -1,5 +1,5 @@
 .settings/
-.bin/*
+bin/
 .DS_Store
 lib/DS_Store
 test/DS_Store

@@ -9,39 +9,46 @@ import twitter4j.Status;
 public class TweetParserTest {
 
 	@Test
-	public void testHillaryInNewYork() {
-		Search test = new Search("the", 42.824415, -107.607604, 150.0, 10);
+	public void testNewYorkSaidSomethingAboutNYC() {
+		Search test = new Search("NYC", 40.741608, -73.990568, 25, 10);
 		List<Status> tweets = test.query();
-		TweetParser parser = new TweetParser(tweets, "the", "Trump");
-//		System.out.println("Proof: " + parser.getStatesList().getQuery1Count("New York"));
-		StateTweetTracker stateTracker = parser.getStatesList();
-		String[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
-				"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", 
-				"Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
-				"Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", 
-				"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
-				"Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
-				"South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
-				"West Virginia", "Wisconsin", "Wyoming" };
-		for(String state : states) {
-			System.out.println(state + ": " + stateTracker.getQuery1Count(state));
-		}
-		assertNotSame(parser.getStatesList().getQuery1Count("Wyoming"), 0); 
+		TweetParser parser = new TweetParser(tweets, 1);
+		assertNotSame(parser.getStatesList().getQuery1Count("New York"), 0); 
 	}
 	
-//	@Test
-//	public void testNFL() {
-//		Search test = new Search("NFL", 40.672567, -73.965794, 3000.0, 1);
-//		List<Status> tweets = test.query();
-////		System.out.println("Proof: " + parser.getStatesList().getQuery1Count("New York"));
-//		
-//		for(Status statuses : tweets) {
-////			System.out.println("Tweet text: " + statuses.getText());
-////			System.out.println("Quoted status: " + statuses.getQuotedStatus());
-////			System.out.println("User name: " + statuses.getUser().getName());
-//			System.out.println(statuses.toString());
-//		}
-//		
-//		assertNotSame(tweets.size(), 0); 
-//	}
+	@Test
+	public void testCaliforniaSaidSomethingAboutDiets() {
+		Search test = new Search("diet", 34.057049, -118.248457, 50, 10);
+		List<Status> tweets = test.query();
+		TweetParser parser = new TweetParser(tweets, 1);
+		assertNotSame(parser.getStatesList().getQuery1Count("California"), 0); 
+	}
+	
+	@Test
+	public void testAbleToParseGoldenGateLocation() {
+		Search test = new Search("golden gate bridge", 37.819304, -122.479389, 3, 10);
+		List<Status> tweets = test.query();
+		TweetParser parser = new TweetParser(tweets, 1);
+		int count = 0;
+		
+		//Count = How many tweets have a Full Name place location included
+		for(Status tweet : tweets) {
+			if(tweet.getPlace() != null && !tweet.getPlace().getFullName().isEmpty()) {
+				count++;
+			}
+		}
+		
+		int diff = parser.getStatesList().getQuery1Count("California") - count;
+		
+		String result;
+		
+		if(diff < 0) {
+			result = "Failure";
+		} else {
+			result = "Success";
+		}
+		
+		assertNotSame(result, "Failure"); 
+	}
+	
 }

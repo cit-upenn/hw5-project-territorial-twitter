@@ -15,12 +15,12 @@ public class TerritorialTwitterLauncher {
 		System.out.println("===================");
 		System.out.println("Compares the popularity of any two search terms against each other.");
 		System.out.println();
+		
 		boolean run = true;
 		int numberOfPages = 50;
-		int rateLimit = numberOfPages * 2;
 		Scanner in = new Scanner(System.in);
 		
-		while (run && rateLimit < 480) {
+		while (run) {
 			
 			// Asks for and reads search terms and runs Search
 			System.out.print("Enter the first search term: ");
@@ -52,14 +52,12 @@ public class TerritorialTwitterLauncher {
 			
 			write.outJS();
 			
-			
 			File htmlFile = new File("Leaflet-embed.html");
 			try {
 				Desktop.getDesktop().browse(htmlFile.toURI());
 			} catch(Exception e) {
 				System.out.println("The HTML file is missing. Please find on your desktop and open.");
 			}
-			
 			
 			// Asks for and reads user input to run again
 			System.out.print("Would you like to run another search (y/n)?: ");
@@ -68,17 +66,11 @@ public class TerritorialTwitterLauncher {
 			// "y" to play again, anything else to stop
 			if (reply.equalsIgnoreCase("y")) {
 				run = true;
-				rateLimit += (2*numberOfPages);
 			} else {
 				run = false;
 			}
 		}
-		
 		in.close();
-		
-		if (rateLimit >= 480) {
-			System.out.println("Your search may hit Twitter's rate limit, please wait a few minutes before rerunning the program.");
-		}
 
 	}
 

@@ -45,8 +45,8 @@ public class Search {
 			
 			//Removed printing statuses for testing.
 //			for (Status status : tweets) {
-////				printStatus(status);
-//				numberOfTweets++;
+//				printStatus(status);
+////				numberOfTweets++;
 //			}
 			numberOfPages--;
 			
@@ -59,10 +59,10 @@ public class Search {
 				//Removed printing statuses for testing.
 //				for (Status status : tweets) {
 //					printStatus(status);
-//					numberOfTweets++;
+////					numberOfTweets++;
 //				}
 				numberOfPages--;
-			}
+			} 
 			
 			System.out.println("\"" + searchTerm + "\"" + " had " + totalTweets.size() + " results.");
 			

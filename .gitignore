@@ -4,4 +4,5 @@
 lib/DS_Store
 test/DS_Store
 us-states-tweets-done.js
-
+leaflet/test.html
+leaflet/test.js

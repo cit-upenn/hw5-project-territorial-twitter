@@ -38,12 +38,21 @@ public class TweetParser {
 
 
 	private void parseTweets() {
+		List<Pattern> stateAbbrMatches = new LinkedList<Pattern>();
+		for(String stateAbbr : mapOfAbbreviations.keySet()) {
+			stateAbbrMatches.add(Pattern.compile("\\b" + stateAbbr + "\\b"));
+		}
+		
 		List<Pattern> stateMatches = new LinkedList<Pattern>();
 		for(String state : mapOfAbbreviations.keySet()) {
-			stateMatches.add(Pattern.compile("[^a-zA-Z0-9]*?" + state + "[^a-zA-Z0-9]*"));
+			stateMatches.add(Pattern.compile("\\b" + mapOfAbbreviations.get(state) + "\\b"));
 		}
+	
 		Matcher match;
+		Pattern capital = Pattern.compile("D\\.C\\.");
+		
 		for (Status tweet : tweets) {
+			boolean foundMatch = false;
 			Place place = tweet.getPlace();
 			User user = tweet.getUser();
 			String userLocation = user.getLocation();
@@ -59,31 +68,62 @@ public class TweetParser {
 						if (queryIndex == 1) {
 							mapOfStates.getState(state).incrementQuery(1);
 							mapOfStates.getState(state).addTweet(tweet, true, false);
+							foundMatch = true;
 						}
 						if (queryIndex == 2) {
 							mapOfStates.getState(state).incrementQuery(2);
 							mapOfStates.getState(state).addTweet(tweet, false, true);
+							foundMatch = true;
 						}
 						
 					}
+				
 				}
-			} else if(!userLocation.isEmpty()) {
-				for(Pattern statePattern : stateMatches) {
-					match = statePattern.matcher(userLocation);
+			} 
+			match = capital.matcher(userLocation);
+			if(match.find()){
+				foundMatch = true;
+			}
+			if(!userLocation.isEmpty() && !foundMatch) {
+				for(Pattern stateAbbrPattern : stateAbbrMatches) {
+					match = stateAbbrPattern.matcher(userLocation);
 					if(match.find()) {
-						String state = statePattern.toString().substring(14, 16);
+						String state = stateAbbrPattern.toString().substring(2, 4);
 						if (queryIndex == 1) {
 							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(1);
 							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, true, false);
+							foundMatch = true;
 						}
 						if (queryIndex == 2) {
 							mapOfStates.getState(mapOfAbbreviations.get(state)).incrementQuery(2);
 							mapOfStates.getState(mapOfAbbreviations.get(state)).addTweet(tweet, false, true);
+							foundMatch = true;
 						}
 					}
 					
 					
 				}
+				
+				if(!foundMatch) {
+					for(Pattern statePattern : stateMatches ) {
+						match = statePattern.matcher(userLocation);
+						if(match.find()) {
+							String state = statePattern.toString();
+							int len = state.length();
+							state = state.substring(2,len-2);
+							
+							if (queryIndex == 1) {
+								mapOfStates.getState(state).incrementQuery(1);
+								mapOfStates.getState(state).addTweet(tweet, true, false);
+							}
+							if (queryIndex == 2) {
+								mapOfStates.getState(state).incrementQuery(2);
+								mapOfStates.getState(state).addTweet(tweet, false, true);
+							}
+						}
+					}
+				}
+				
 			}
 			
 

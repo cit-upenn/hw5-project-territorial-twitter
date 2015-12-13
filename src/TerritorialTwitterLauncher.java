@@ -48,21 +48,7 @@ public class TerritorialTwitterLauncher {
 			
 			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
 			JSWriter write = new JSWriter(parsedTweets, firstTerm, secondTerm);
-			String[] states = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
-					"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", 
-					"Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
-					"Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", 
-					"New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
-					"Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
-					"South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
-					"West Virginia", "Wisconsin", "Wyoming" };
-			for(String state : states) {
-				System.out.println(state + ": " + parsedTweets.getQuery1Count(state) + ", " + parsedTweets.getQuery2Count(state) );
-			}
-			List<TaggedStatus> idahoTweets = parsedTweets.getState("Idaho").getTweets();
-			for(TaggedStatus moreTweets : idahoTweets) {
-				System.out.println(moreTweets.getTweet());
-			}
+		
 			
 			write.outJS();
 			

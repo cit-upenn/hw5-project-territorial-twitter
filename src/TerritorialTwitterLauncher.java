@@ -48,7 +48,7 @@ public class TerritorialTwitterLauncher {
 			
 			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
 			JSWriter write = new JSWriter(parsedTweets, firstTerm, secondTerm);
-		
+		 
 			
 			write.outJS();
 			

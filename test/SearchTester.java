@@ -10,15 +10,9 @@ public class SearchTester {
 	}
 	
 	@Test
-	public void testSearch() {
-		Search search = new Search("nasa", 1);
-		assertNotNull(search);
-	}
-	
-	@Test
 	public void testSearchQuery() {
 		Search search = new Search("nasa", 1);
-		assertNotNull(search.query());
+		assertTrue(search.query().size() >= 0);
 	}
 	
 	@Test

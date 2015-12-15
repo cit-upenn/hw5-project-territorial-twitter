@@ -1,5 +1,7 @@
 # Territorial Twitter
 
+![alt tag](https://cloud.githubusercontent.com/assets/1366558/11802219/35ec8a12-a2bc-11e5-90a5-8265b9584154.png)
+
 ##Setup
 This program can be run in an IDE or on the command line. The user simply needs to type two search queries to start. The user needs to have access to the Internet in order to run this program. 
 

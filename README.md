@@ -3,7 +3,7 @@
 ![alt tag](https://cloud.githubusercontent.com/assets/1366558/11802219/35ec8a12-a2bc-11e5-90a5-8265b9584154.png)
 
 ##Setup
-This program can be run in an IDE or on the command line. The user simply needs to type two search queries to start. The user needs to have access to the Internet in order to run this program. 
+This program can be run in an IDE or on the command line. The user simply needs to type two search queries to start. The user needs to have access to the Internet in order to run this program. Finally, if the Twitter API is down, the program will not work. 
 
 The files **us-states-tweets.js** and **Leaflet-embed.html** need to be located in the main directory of the program. 
 
@@ -16,6 +16,16 @@ On the backend, this project used the Twitter4J java library to handle calls to 
 On the backend, Leaflet.js and Mapbox powered drawing the US states' data and interactivity. 
 
 ##Class Notes
+
+###Connect
+This class makes use of the Twitter4j library and creates a twitter object that allows the program interact with the Twitter API. It currently relies on a hard coded consumer key and secret to get the application token to create the twitter object. The application token allows more search queries than the user token. 
+
+###Search
+While Twitter's Search API has the ability to filter results to ones that are geo-tagged, this program looks for a broader range of tweet results. The location parsing is done in another class. We found that we could categorize a much larger magnitude by including tweets that have a User profile location specified. 
+
+The program assumes the user will give valid somewhat reasonable inputs (no negative number of pages) and specifies a clear and correct search term (i.e. the program won't be able to give the user correct results if they mistype "coke" as "cok").
+
+The class check getRateLimit to ensure that it has not gone over Twitter's 450 search request limit. However, Twitter may decided that getRateLimit is being called too much and throws an error. The chance of this occuring is very much a small edge case. 
 
 ###TweetParser
 The Search class takes care of finding tweets with the relevant queries. The job of this class is to parse out the locations of the tweets looking at their geotagged location and the user's profile location. The tweet location takes precedence over the user profile location. The locations are identified by the state names and the state abbreviations. Tweets labeled as "New York, NY", "New York" and "NY" will all be recorded for New York, but "NYC" will not be counted anywhere. 

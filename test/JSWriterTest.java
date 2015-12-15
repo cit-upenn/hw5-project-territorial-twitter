@@ -7,7 +7,11 @@ import org.junit.Test;
 
 import twitter4j.Status;
 
-
+/**
+ * This class is the JUnit test for JSWriter
+ * @author weiyin
+ *
+ */
 public class JSWriterTest {
 	
 	

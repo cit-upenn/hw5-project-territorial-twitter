@@ -37,7 +37,7 @@ public class JSWriter {
 	 * This method finds the state name in a text file and edits its tweet data based on values
 	 * from that particular state
 	 * @param line the line of text scanned by outJS
-	 * @return line the line of text with "ratio", "q1", and "q2" edited by corresponding value
+	 * @return line the line of text with "ratio", "q1", "q2", "qc1", and "qc2" edited by corresponding value
 	 */
 	public String writeJS(String line){
 //		Most lines in the .js file contains data for a state. Therefore, the state name is the first string to check for
@@ -76,8 +76,8 @@ public class JSWriter {
 	}
 	
 	/**
-	 * This method takes an input file called "us-states-tweets.js" and calls writeJS to overwrite the instances of "counts."
-	 * The result is a text-output called "us-states-tweets-done.js"
+	 * This method takes an input file called "us-states-tweets.js" and calls writeJS to overwrite the instances of 
+	 * "ratio", "q1", "q2", "qc1", and "qc2". The result is a text-output file called "us-states-tweets-done.js"
 	 */
 	public void outJS(){
 		try {

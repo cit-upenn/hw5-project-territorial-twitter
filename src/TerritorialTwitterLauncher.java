@@ -46,13 +46,16 @@ public class TerritorialTwitterLauncher {
 			
 			parsedTweets.addParsedTweets(secondParser.getStatesList(), 2);
 			
-			//This should take in the parsed tweets make updates to Javascript and HTML files as needed
-			JSWriter write = new JSWriter(parsedTweets, firstTerm, secondTerm);
-		 
+			//This should take in the parsed tweets and make updates to JavaScript and HTML files as needed
+			JSWriter js = new JSWriter(parsedTweets, firstTerm, secondTerm);
+		
+			js.outJS();
 			
-			write.outJS();
+			HTMLWriter html = new HTMLWriter( firstTerm, secondTerm);
 			
-			File htmlFile = new File("Leaflet-embed.html");
+			html.outHTML();
+			
+			File htmlFile = new File("Leaflet-embed-done.html");
 			try {
 				Desktop.getDesktop().browse(htmlFile.toURI());
 			} catch(Exception e) {

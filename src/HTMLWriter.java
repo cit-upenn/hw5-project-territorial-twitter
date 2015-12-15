@@ -27,8 +27,8 @@ public class HTMLWriter {
 		this.secondTerm = secondTerm;
 	}
 	/**
-	 * This method finds the state name in a text file and edits its tweet data based on values
-	 * from that particular state
+	 * This method finds the searchTerm dummies in the legend and edits it based on user input 
+	 * 
 	 * @param line the line of text scanned by outHTML
 	 * @return line the line of text with "'searchTerm1'" and "'searchTerm2'" edited by corresponding value
 	 */
@@ -45,7 +45,7 @@ public class HTMLWriter {
 	}
 	
 	/**
-	 * This method takes an input file called "Leaflet-embed.html" and calls writeJS to overwrite the instances of "counts."
+	 * This method takes an input file called "Leaflet-embed.html" and calls writeHTML to overwrite the instances of "counts."
 	 * The result is a text-output called "Leaflet-embed-done.html"
 	 */
 	public void outHTML(){
